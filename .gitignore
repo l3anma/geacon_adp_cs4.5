@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+.history/
+out/
+release/
+*.iml
+.DS_Store
+__debug_bin

@@ -1,0 +1,32 @@
+# 配置参考http://llever.com/goreleaser-zh/customization/
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+    goarch:
+      - amd64
+      # - arm64
+      # - arm
+      - "386"
+    #剔除报错中的路径信息
+    flags:
+      - -trimpath
+    asmflags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
+    # upx
+    # hooks:
+    #    post: upx --best -f -q "{{ .Path }}"
+
+
+checksum:
+  name_template: 'checksums.txt'
+changelog:
+  sort: asc
